@@ -1,5 +1,7 @@
 # @matinee/sdk
 
+[![ci](https://github.com/matinee-ai/sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/matinee-ai/sdk/actions/workflows/ci.yml)
+
 The reference TypeScript client for the [Matinee AI](https://matinee.ai) v1
 API, together with the OpenAPI specification it is generated from.
 
