@@ -1,0 +1,26 @@
+{
+  "name": "@matinee/sdk",
+  "version": "0.1.0",
+  "description": "Reference TypeScript client for the Matinee AI v1 API, generated from its OpenAPI specification. Pre-release: the API is specified, not yet hosted.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matinee-ai/sdk.git"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "check": "tsc -p . --noEmit",
+    "test": "node --test test/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "^7.0.2"
+  }
+}

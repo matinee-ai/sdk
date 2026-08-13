@@ -1,0 +1,6326 @@
+{
+  "info": {
+    "name": "Matinee AI API",
+    "description": "Generated from api/openapi.json. Phase 9 §36.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://sandbox-api.matinee.ai/v1"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "organizationId",
+      "value": ""
+    },
+    {
+      "key": "environment",
+      "value": "sandbox"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "Session lifecycle. No public signup — Phase 7 §5.5 gives two entry paths, both elsewhere.",
+      "item": [
+        {
+          "name": "Exchange credentials for a session.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Phase 9 §7. Exchange credentials for a session."
+          }
+        },
+        {
+          "name": "Exchange a refresh token for a new access token.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/refresh",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "refresh"
+              ]
+            },
+            "description": "Phase 9 §7. Exchange a refresh token for a new access token."
+          }
+        },
+        {
+          "name": "Revoke the current session.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            },
+            "description": "Phase 9 §7. Revoke the current session."
+          }
+        },
+        {
+          "name": "The authenticated user, their memberships and effective permissions.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "description": "Phase 9 §7. The authenticated user, their memberships and effective permissions."
+          }
+        },
+        {
+          "name": "Complete a second-factor challenge.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/mfa/verify",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "mfa",
+                "verify"
+              ]
+            },
+            "description": "Phase 9 §7. Complete a second-factor challenge."
+          }
+        },
+        {
+          "name": "Authenticate with a passkey.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/passkey/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "passkey",
+                "login"
+              ]
+            },
+            "description": "Phase 9 §7. Authenticate with a passkey."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Access requests",
+      "description": "The door. Phase 7 §5.5: there is no public signup, so this is how an organization begins.",
+      "item": [
+        {
+          "name": "Submit an access request.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "access-requests"
+              ]
+            },
+            "description": "Phase 9 §8. Submit an access request."
+          }
+        },
+        {
+          "name": "List access requests.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "access-requests"
+              ]
+            },
+            "description": "Phase 9 §8. List access requests."
+          }
+        },
+        {
+          "name": "Update reviewer notes or assignment.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/access-requests/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "access-requests",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §8. Update reviewer notes or assignment."
+          }
+        },
+        {
+          "name": "Approve a request and provision the organization.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/access-requests/{id}/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "access-requests",
+                "{id}",
+                "approve"
+              ]
+            },
+            "description": "Phase 9 §8. Approve a request and provision the organization."
+          }
+        },
+        {
+          "name": "Reject a request.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/access-requests/{id}/reject",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "access-requests",
+                "{id}",
+                "reject"
+              ]
+            },
+            "description": "Phase 9 §8. Reject a request."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Organizations",
+      "description": "The tenant.",
+      "item": [
+        {
+          "name": "Create an organization.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organizations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations"
+              ]
+            },
+            "description": "Phase 9 §9. Create an organization."
+          }
+        },
+        {
+          "name": "Read an organization.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §9. Read an organization."
+          }
+        },
+        {
+          "name": "Update an organization.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §9. Update an organization."
+          }
+        },
+        {
+          "name": "Begin organization deletion.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §9. Begin organization deletion."
+          }
+        },
+        {
+          "name": "Read organization settings.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{id}/settings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{id}",
+                "settings"
+              ]
+            },
+            "description": "Phase 9 §9. Read organization settings."
+          }
+        },
+        {
+          "name": "Update organization settings.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{id}/settings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{id}",
+                "settings"
+              ]
+            },
+            "description": "Phase 9 §9. Update organization settings."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Team",
+      "description": "Membership and roles. The second entry path (Phase 7 §5.5) is here.",
+      "item": [
+        {
+          "name": "List members.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{id}/members",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{id}",
+                "members"
+              ]
+            },
+            "description": "Phase 9 §10. List members."
+          }
+        },
+        {
+          "name": "Invite a member.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{id}/members",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{id}",
+                "members"
+              ]
+            },
+            "description": "Phase 9 §10. Invite a member."
+          }
+        },
+        {
+          "name": "Change a member’s role.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{id}/members/{member_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{id}",
+                "members",
+                "{member_id}"
+              ]
+            },
+            "description": "Phase 9 §10. Change a member’s role."
+          }
+        },
+        {
+          "name": "Remove a member.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{id}/members/{member_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{id}",
+                "members",
+                "{member_id}"
+              ]
+            },
+            "description": "Phase 9 §10. Remove a member."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "description": "End users of a business. Phase 7 §11 forbids merging these with platform users.",
+      "item": [
+        {
+          "name": "Create a customer.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers"
+              ]
+            },
+            "description": "Phase 9 §11. Create a customer."
+          }
+        },
+        {
+          "name": "List customers.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers"
+              ]
+            },
+            "description": "Phase 9 §11. List customers."
+          }
+        },
+        {
+          "name": "Search customers.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "search"
+              ]
+            },
+            "description": "Phase 9 §11. Search customers."
+          }
+        },
+        {
+          "name": "Read a customer.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §11. Read a customer."
+          }
+        },
+        {
+          "name": "Update a customer.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §11. Update a customer."
+          }
+        },
+        {
+          "name": "Delete a customer.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §11. Delete a customer."
+          }
+        },
+        {
+          "name": "Start a bulk import.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/import",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "import"
+              ]
+            },
+            "description": "Phase 9 §11. Start a bulk import."
+          }
+        },
+        {
+          "name": "Start an export.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/export",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "export"
+              ]
+            },
+            "description": "Phase 9 §11. Start an export."
+          }
+        },
+        {
+          "name": "Segments a customer belongs to.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/{id}/segments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "{id}",
+                "segments"
+              ]
+            },
+            "description": "Phase 9 §11. Segments a customer belongs to."
+          }
+        },
+        {
+          "name": "Customer activity history.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/{id}/activity",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "{id}",
+                "activity"
+              ]
+            },
+            "description": "Phase 9 §11. Customer activity history."
+          }
+        },
+        {
+          "name": "Wallets belonging to a customer.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/{id}/wallets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "{id}",
+                "wallets"
+              ]
+            },
+            "description": "Phase 9 §11. Wallets belonging to a customer."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wallets",
+      "description": "Holders of balances. Balances themselves are derived from the ledger (ADR-0008).",
+      "item": [
+        {
+          "name": "Create a wallet.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets"
+              ]
+            },
+            "description": "Phase 9 §12. Create a wallet."
+          }
+        },
+        {
+          "name": "List wallets.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets"
+              ]
+            },
+            "description": "Phase 9 §12. List wallets."
+          }
+        },
+        {
+          "name": "Read a wallet.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §12. Read a wallet."
+          }
+        },
+        {
+          "name": "Freeze a wallet.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets/{id}/freeze",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{id}",
+                "freeze"
+              ]
+            },
+            "description": "Phase 9 §12. Freeze a wallet."
+          }
+        },
+        {
+          "name": "Unfreeze a wallet.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets/{id}/unfreeze",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{id}",
+                "unfreeze"
+              ]
+            },
+            "description": "Phase 9 §12. Unfreeze a wallet."
+          }
+        },
+        {
+          "name": "Transfer value from a wallet.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets/{id}/transfer",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{id}",
+                "transfer"
+              ]
+            },
+            "description": "Phase 9 §12. Transfer value from a wallet."
+          }
+        },
+        {
+          "name": "Balances by asset.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets/{id}/balances",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{id}",
+                "balances"
+              ]
+            },
+            "description": "Phase 9 §12. Balances by asset."
+          }
+        },
+        {
+          "name": "Transaction history.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets/{id}/transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{id}",
+                "transactions"
+              ]
+            },
+            "description": "Phase 9 §12. Transaction history."
+          }
+        },
+        {
+          "name": "External network addresses.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets/{id}/addresses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{id}",
+                "addresses"
+              ]
+            },
+            "description": "Phase 9 §12. External network addresses."
+          }
+        },
+        {
+          "name": "Provision an address.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets/{id}/addresses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{id}",
+                "addresses"
+              ]
+            },
+            "description": "Phase 9 §12. Provision an address."
+          }
+        },
+        {
+          "name": "Configure or initiate recovery.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallets/{id}/recovery",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{id}",
+                "recovery"
+              ]
+            },
+            "description": "Phase 9 §12. Configure or initiate recovery."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ledger",
+      "description": "Double-entry postings. The invariants are enforced by the database regardless of caller (Phase 8 §66).",
+      "item": [
+        {
+          "name": "Post a transaction.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ledger/transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ledger",
+                "transactions"
+              ]
+            },
+            "description": "Phase 9 §13. Post a transaction."
+          }
+        },
+        {
+          "name": "Read a transaction.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ledger/transactions/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ledger",
+                "transactions",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §13. Read a transaction."
+          }
+        },
+        {
+          "name": "Entries of a transaction.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ledger/transactions/{id}/entries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ledger",
+                "transactions",
+                "{id}",
+                "entries"
+              ]
+            },
+            "description": "Phase 9 §13. Entries of a transaction."
+          }
+        },
+        {
+          "name": "Reverse a transaction.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ledger/transactions/{id}/reverse",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ledger",
+                "transactions",
+                "{id}",
+                "reverse"
+              ]
+            },
+            "description": "Phase 9 §13. Reverse a transaction."
+          }
+        },
+        {
+          "name": "List ledger accounts.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ledger/accounts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ledger",
+                "accounts"
+              ]
+            },
+            "description": "Phase 9 §13. List ledger accounts."
+          }
+        },
+        {
+          "name": "Balance of an account.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ledger/accounts/{id}/balance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ledger",
+                "accounts",
+                "{id}",
+                "balance"
+              ]
+            },
+            "description": "Phase 9 §13. Balance of an account."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assets",
+      "description": "Digital assets. Blockchain is an optional adapter (ADR-0009), so deployment is a separate, gated operation.",
+      "item": [
+        {
+          "name": "Create an asset.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "Phase 9 §14. Create an asset."
+          }
+        },
+        {
+          "name": "Update an asset.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §14. Update an asset."
+          }
+        },
+        {
+          "name": "Deploy an asset to external infrastructure.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/deploy",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "deploy"
+              ]
+            },
+            "description": "Phase 9 §14. Deploy an asset to external infrastructure."
+          }
+        },
+        {
+          "name": "Pause an asset.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/pause",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "pause"
+              ]
+            },
+            "description": "Phase 9 §14. Pause an asset."
+          }
+        },
+        {
+          "name": "Resume a paused asset.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/resume",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "resume"
+              ]
+            },
+            "description": "Phase 9 §14. Resume a paused asset."
+          }
+        },
+        {
+          "name": "Archive an asset.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/archive",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "archive"
+              ]
+            },
+            "description": "Phase 9 §14. Archive an asset."
+          }
+        },
+        {
+          "name": "Supply configuration and issued total.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/supply",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "supply"
+              ]
+            },
+            "description": "Phase 9 §14. Supply configuration and issued total."
+          }
+        },
+        {
+          "name": "Where the asset is deployed.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/infrastructure",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "infrastructure"
+              ]
+            },
+            "description": "Phase 9 §14. Where the asset is deployed."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rewards",
+      "description": "Programmes, versions and rules. Editing an active rule creates a draft (Phase 7 §14.3).",
+      "item": [
+        {
+          "name": "List reward programmes.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-programs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-programs"
+              ]
+            },
+            "description": "Phase 9 §15. List reward programmes."
+          }
+        },
+        {
+          "name": "Create a reward programme.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-programs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-programs"
+              ]
+            },
+            "description": "Phase 9 §15. Create a reward programme."
+          }
+        },
+        {
+          "name": "Read a programme.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-programs/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-programs",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §15. Read a programme."
+          }
+        },
+        {
+          "name": "Update a programme.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-programs/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-programs",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §15. Update a programme."
+          }
+        },
+        {
+          "name": "Version history.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-programs/{id}/versions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-programs",
+                "{id}",
+                "versions"
+              ]
+            },
+            "description": "Phase 9 §15. Version history."
+          }
+        },
+        {
+          "name": "Publish the draft version.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-programs/{id}/publish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-programs",
+                "{id}",
+                "publish"
+              ]
+            },
+            "description": "Phase 9 §15. Publish the draft version."
+          }
+        },
+        {
+          "name": "Pause a programme.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-programs/{id}/pause",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-programs",
+                "{id}",
+                "pause"
+              ]
+            },
+            "description": "Phase 9 §15. Pause a programme."
+          }
+        },
+        {
+          "name": "Resume a programme.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-programs/{id}/resume",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-programs",
+                "{id}",
+                "resume"
+              ]
+            },
+            "description": "Phase 9 §15. Resume a programme."
+          }
+        },
+        {
+          "name": "Add a rule to a draft version.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-rules",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-rules"
+              ]
+            },
+            "description": "Phase 9 §15. Add a rule to a draft version."
+          }
+        },
+        {
+          "name": "Update a rule.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-rules/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-rules",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §15. Update a rule."
+          }
+        },
+        {
+          "name": "Remove a rule from a draft.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-rules/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-rules",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §15. Remove a rule from a draft."
+          }
+        },
+        {
+          "name": "Evaluate a rule against a sample event without issuing.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-rules/{id}/simulate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-rules",
+                "{id}",
+                "simulate"
+              ]
+            },
+            "description": "Phase 9 §15. Evaluate a rule against a sample event without issuing."
+          }
+        },
+        {
+          "name": "Reward history.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reward-executions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reward-executions"
+              ]
+            },
+            "description": "Phase 9 §15. Reward history."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "description": "Business events in, platform events out. ADR-0012 makes duplicates expected.",
+      "item": [
+        {
+          "name": "Submit a business event.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events"
+              ]
+            },
+            "description": "Phase 9 §16. Submit a business event."
+          }
+        },
+        {
+          "name": "List events.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events"
+              ]
+            },
+            "description": "Phase 9 §16. List events."
+          }
+        },
+        {
+          "name": "Read an event and its processing attempts.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §16. Read an event and its processing attempts."
+          }
+        },
+        {
+          "name": "Reprocess an event.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/{id}/replay",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "{id}",
+                "replay"
+              ]
+            },
+            "description": "Phase 9 §16. Reprocess an event."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Webhooks",
+      "description": "Signed outbound delivery with the Phase 7 §19.3 retry schedule.",
+      "item": [
+        {
+          "name": "List endpoints.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/webhooks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "webhooks"
+              ]
+            },
+            "description": "Phase 9 §17. List endpoints."
+          }
+        },
+        {
+          "name": "Register an endpoint.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/webhooks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "webhooks"
+              ]
+            },
+            "description": "Phase 9 §17. Register an endpoint."
+          }
+        },
+        {
+          "name": "Update an endpoint.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/webhooks/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "webhooks",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §17. Update an endpoint."
+          }
+        },
+        {
+          "name": "Delete an endpoint.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/webhooks/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "webhooks",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §17. Delete an endpoint."
+          }
+        },
+        {
+          "name": "Send a test delivery.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/webhooks/{id}/test",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "webhooks",
+                "{id}",
+                "test"
+              ]
+            },
+            "description": "Phase 9 §17. Send a test delivery."
+          }
+        },
+        {
+          "name": "Delivery history.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/webhooks/{id}/deliveries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "webhooks",
+                "{id}",
+                "deliveries"
+              ]
+            },
+            "description": "Phase 9 §17. Delivery history."
+          }
+        },
+        {
+          "name": "Replay a delivery.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/webhooks/{id}/deliveries/{delivery}/replay",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "webhooks",
+                "{id}",
+                "deliveries",
+                "{delivery}",
+                "replay"
+              ]
+            },
+            "description": "Phase 9 §17. Replay a delivery."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Developers",
+      "description": "Projects, keys and usage.",
+      "item": [
+        {
+          "name": "List projects.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/developer/projects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "developer",
+                "projects"
+              ]
+            },
+            "description": "Phase 9 §18. List projects."
+          }
+        },
+        {
+          "name": "Create a project.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/developer/projects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "developer",
+                "projects"
+              ]
+            },
+            "description": "Phase 9 §18. Create a project."
+          }
+        },
+        {
+          "name": "List API keys.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/developer/api-keys",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "developer",
+                "api-keys"
+              ]
+            },
+            "description": "Phase 9 §18. List API keys."
+          }
+        },
+        {
+          "name": "Create an API key.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/developer/api-keys",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "developer",
+                "api-keys"
+              ]
+            },
+            "description": "Phase 9 §18. Create an API key."
+          }
+        },
+        {
+          "name": "Revoke an API key.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/developer/api-keys/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "developer",
+                "api-keys",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §18. Revoke an API key."
+          }
+        },
+        {
+          "name": "API usage.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/developer/usage",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "developer",
+                "usage"
+              ]
+            },
+            "description": "Phase 9 §18. API usage."
+          }
+        },
+        {
+          "name": "Request logs.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/developer/logs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "developer",
+                "logs"
+              ]
+            },
+            "description": "Phase 9 §18. Request logs."
+          }
+        },
+        {
+          "name": "SDK downloads and the OpenAPI document.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/developer/sdk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "developer",
+                "sdk"
+              ]
+            },
+            "description": "Phase 9 §18. SDK downloads and the OpenAPI document."
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI",
+      "description": "Read-only assistance plus a proposal-and-approval boundary. Phase 7 §17.5.",
+      "item": [
+        {
+          "name": "Start a conversation.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/conversations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "conversations"
+              ]
+            },
+            "description": "Phase 9 §19. Start a conversation."
+          }
+        },
+        {
+          "name": "Conversation history with evidence.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/conversations/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "conversations",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §19. Conversation history with evidence."
+          }
+        },
+        {
+          "name": "Send a message.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/messages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "messages"
+              ]
+            },
+            "description": "Phase 9 §19. Send a message."
+          }
+        },
+        {
+          "name": "Add a knowledge document.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/knowledge",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "knowledge"
+              ]
+            },
+            "description": "Phase 9 §19. Add a knowledge document."
+          }
+        },
+        {
+          "name": "Retrieval over organization knowledge.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "search"
+              ]
+            },
+            "description": "Phase 9 §19. Retrieval over organization knowledge."
+          }
+        },
+        {
+          "name": "Proposed actions awaiting review.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/actions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "actions"
+              ]
+            },
+            "description": "Phase 9 §19. Proposed actions awaiting review."
+          }
+        },
+        {
+          "name": "Approve a proposed action.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/actions/{id}/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "actions",
+                "{id}",
+                "approve"
+              ]
+            },
+            "description": "Phase 9 §19. Approve a proposed action."
+          }
+        },
+        {
+          "name": "Reject a proposed action.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/actions/{id}/reject",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "actions",
+                "{id}",
+                "reject"
+              ]
+            },
+            "description": "Phase 9 §19. Reject a proposed action."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "description": "Served from aggregates. Phase 7 §21 forbids querying transactional tables directly.",
+      "item": [
+        {
+          "name": "Overview metrics.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "dashboard"
+              ]
+            },
+            "description": "Phase 9 §20. Overview metrics."
+          }
+        },
+        {
+          "name": "Reward programme performance.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/rewards",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "rewards"
+              ]
+            },
+            "description": "Phase 9 §20. Reward programme performance."
+          }
+        },
+        {
+          "name": "Wallet activity.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/wallets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "wallets"
+              ]
+            },
+            "description": "Phase 9 §20. Wallet activity."
+          }
+        },
+        {
+          "name": "Customer engagement.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/customers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "customers"
+              ]
+            },
+            "description": "Phase 9 §20. Customer engagement."
+          }
+        },
+        {
+          "name": "API usage.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/api",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "api"
+              ]
+            },
+            "description": "Phase 9 §20. API usage."
+          }
+        },
+        {
+          "name": "AI usage and cost.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/ai",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "ai"
+              ]
+            },
+            "description": "Phase 9 §20. AI usage and cost."
+          }
+        },
+        {
+          "name": "Asset circulation.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/assets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "assets"
+              ]
+            },
+            "description": "Phase 9 §20. Asset circulation."
+          }
+        },
+        {
+          "name": "Start an analytics export.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/export",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "export"
+              ]
+            },
+            "description": "Phase 9 §20. Start an analytics export."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Audit",
+      "description": "Read-only. Phase 8 makes audit_logs append-only with a trigger, so there is no write endpoint to specify.",
+      "item": [
+        {
+          "name": "List audit records.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/audit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "audit"
+              ]
+            },
+            "description": "Phase 9 §21. List audit records."
+          }
+        },
+        {
+          "name": "Read an audit record.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/audit/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "audit",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §21. Read an audit record."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "description": "In-app notifications and delivery preferences.",
+      "item": [
+        {
+          "name": "List notifications.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications"
+              ]
+            },
+            "description": "Phase 9 §22. List notifications."
+          }
+        },
+        {
+          "name": "Mark as read.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/{id}/read",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                "{id}",
+                "read"
+              ]
+            },
+            "description": "Phase 9 §22. Mark as read."
+          }
+        },
+        {
+          "name": "Read delivery preferences.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notification-preferences",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notification-preferences"
+              ]
+            },
+            "description": "Phase 9 §22. Read delivery preferences."
+          }
+        },
+        {
+          "name": "Update delivery preferences.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notification-preferences",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notification-preferences"
+              ]
+            },
+            "description": "Phase 9 §22. Update delivery preferences."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Security",
+      "description": "Alerts, devices and sessions.",
+      "item": [
+        {
+          "name": "Security posture summary.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/security/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "security",
+                "dashboard"
+              ]
+            },
+            "description": "Phase 9 §23. Security posture summary."
+          }
+        },
+        {
+          "name": "List alerts.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/security/alerts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "security",
+                "alerts"
+              ]
+            },
+            "description": "Phase 9 §23. List alerts."
+          }
+        },
+        {
+          "name": "Resolve an alert.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/security/alerts/{id}/resolve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "security",
+                "alerts",
+                "{id}",
+                "resolve"
+              ]
+            },
+            "description": "Phase 9 §23. Resolve an alert."
+          }
+        },
+        {
+          "name": "List known devices.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/security/devices",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "security",
+                "devices"
+              ]
+            },
+            "description": "Phase 9 §23. List known devices."
+          }
+        },
+        {
+          "name": "List active sessions.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/security/sessions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "security",
+                "sessions"
+              ]
+            },
+            "description": "Phase 9 §23. List active sessions."
+          }
+        },
+        {
+          "name": "Revoke a session.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/security/sessions/{id}/revoke",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "security",
+                "sessions",
+                "{id}",
+                "revoke"
+              ]
+            },
+            "description": "Phase 9 §23. Revoke a session."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "description": "One query across seven resource types, tenant filtered.",
+      "item": [
+        {
+          "name": "Search across resources.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "search"
+              ]
+            },
+            "description": "Phase 9 §24. Search across resources."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Batch",
+      "description": "Bulk writes. Every item is authorized and idempotency-keyed independently.",
+      "item": [
+        {
+          "name": "Create customers in bulk.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/batch/customers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batch",
+                "customers"
+              ]
+            },
+            "description": "Phase 9 §28. Create customers in bulk."
+          }
+        },
+        {
+          "name": "Create rewards in bulk.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/batch/rewards",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batch",
+                "rewards"
+              ]
+            },
+            "description": "Phase 9 §28. Create rewards in bulk."
+          }
+        },
+        {
+          "name": "Create wallets in bulk.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/batch/wallets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batch",
+                "wallets"
+              ]
+            },
+            "description": "Phase 9 §28. Create wallets in bulk."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Digital Assets",
+      "description": "The Digital Asset Engine's public surface. §2: infrastructure is chosen after the business purpose, so none of these endpoints requires a chain.",
+      "item": [
+        {
+          "name": "List assets.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "Phase 9 §63. List assets."
+          }
+        },
+        {
+          "name": "Read an asset.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §63. Read an asset."
+          }
+        },
+        {
+          "name": "Activate a configured asset.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/activate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "activate"
+              ]
+            },
+            "description": "Phase 9 §63. Activate a configured asset."
+          }
+        },
+        {
+          "name": "Retire an asset.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/retire",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "retire"
+              ]
+            },
+            "description": "Phase 9 §63. Retire an asset."
+          }
+        },
+        {
+          "name": "Issue units of an asset.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/issue",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "issue"
+              ]
+            },
+            "description": "Phase 9 §63.1. Issue units of an asset."
+          }
+        },
+        {
+          "name": "Burn units of an asset.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/burn",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "burn"
+              ]
+            },
+            "description": "Phase 9 §63.2. Burn units of an asset."
+          }
+        },
+        {
+          "name": "Transfer units between wallets.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "transfers"
+              ]
+            },
+            "description": "Phase 9 §63.3. Transfer units between wallets."
+          }
+        },
+        {
+          "name": "Redeem units for business value.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/redemptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "redemptions"
+              ]
+            },
+            "description": "Phase 9 §63.4. Redeem units for business value."
+          }
+        },
+        {
+          "name": "Request deployment to a network.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/deployments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "deployments"
+              ]
+            },
+            "description": "Phase 9 §63.5. Request deployment to a network."
+          }
+        },
+        {
+          "name": "Read a deployment.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assets/{id}/deployments/{deployment_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets",
+                "{id}",
+                "deployments",
+                "{deployment_id}"
+              ]
+            },
+            "description": "Phase 9 §63.6. Read a deployment."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Blockchain Transactions",
+      "description": "The §24 transaction lifecycle, read and operated on. Empty in every environment — nothing has been submitted to a network.",
+      "item": [
+        {
+          "name": "List blockchain transactions.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "transactions"
+              ]
+            },
+            "description": "Phase 9 §64. List blockchain transactions."
+          }
+        },
+        {
+          "name": "Read a blockchain transaction.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/transactions/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "transactions",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §64. Read a blockchain transaction."
+          }
+        },
+        {
+          "name": "Resubmit a failed or dropped transaction.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/transactions/{id}/retry",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "transactions",
+                "{id}",
+                "retry"
+              ]
+            },
+            "description": "Phase 9 §64. Resubmit a failed or dropped transaction."
+          }
+        },
+        {
+          "name": "Reconcile a transaction against the network.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/transactions/{id}/reconcile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "transactions",
+                "{id}",
+                "reconcile"
+              ]
+            },
+            "description": "Phase 9 §64. Reconcile a transaction against the network."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Blockchain Networks",
+      "description": "The network registry. Returns an empty collection: §22 says start with one or two networks based on actual customer need, and no adapter exists to make one real.",
+      "item": [
+        {
+          "name": "List supported networks.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/networks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "networks"
+              ]
+            },
+            "description": "Phase 9 §65. List supported networks."
+          }
+        },
+        {
+          "name": "Read a network.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/networks/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "networks",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §65. Read a network."
+          }
+        },
+        {
+          "name": "Current network health.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/networks/{id}/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "networks",
+                "{id}",
+                "status"
+              ]
+            },
+            "description": "Phase 9 §65. Current network health."
+          }
+        },
+        {
+          "name": "Estimate the fee for an operation.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/networks/{id}/estimate-fee",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "networks",
+                "{id}",
+                "estimate-fee"
+              ]
+            },
+            "description": "Phase 9 §65. Estimate the fee for an operation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Treasury",
+      "description": "§17.1's seven accounts, served from the ledger rather than from a treasury table — ADR-0008 keeps every balance in the ledger, and a treasury balance held elsewhere would be a second source of truth.",
+      "item": [
+        {
+          "name": "Treasury overview.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/treasury",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "treasury"
+              ]
+            },
+            "description": "Phase 9 §66. Treasury overview."
+          }
+        },
+        {
+          "name": "Treasury balances by asset.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/treasury/balances",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "treasury",
+                "balances"
+              ]
+            },
+            "description": "Phase 9 §66. Treasury balances by asset."
+          }
+        },
+        {
+          "name": "Treasury transaction history.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/treasury/transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "treasury",
+                "transactions"
+              ]
+            },
+            "description": "Phase 9 §66. Treasury transaction history."
+          }
+        },
+        {
+          "name": "Move value between treasury accounts.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/treasury/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "treasury",
+                "transfers"
+              ]
+            },
+            "description": "Phase 9 §66. Move value between treasury accounts."
+          }
+        },
+        {
+          "name": "Configure a treasury approval policy.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/treasury/approvals",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "treasury",
+                "approvals"
+              ]
+            },
+            "description": "Phase 9 §66. Configure a treasury approval policy."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Approvals",
+      "description": "§34 — the human decision point for high-risk operations. The four-eyes rule is enforced beneath this API: the database refuses a decision from the user who raised the request.",
+      "item": [
+        {
+          "name": "List pending approvals.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/approvals",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "approvals"
+              ]
+            },
+            "description": "Phase 9 §67. List pending approvals."
+          }
+        },
+        {
+          "name": "Read an approval and its decisions.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/approvals/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "approvals",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §67. Read an approval and its decisions."
+          }
+        },
+        {
+          "name": "Approve a pending operation.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/approvals/{id}/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "approvals",
+                "{id}",
+                "approve"
+              ]
+            },
+            "description": "Phase 9 §67. Approve a pending operation."
+          }
+        },
+        {
+          "name": "Reject a pending operation.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/approvals/{id}/reject",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "approvals",
+                "{id}",
+                "reject"
+              ]
+            },
+            "description": "Phase 9 §67. Reject a pending operation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Agents",
+      "description": "§9 — a configured AI worker with a role, permissions, tools and operating rules. §3 caps its authority at the invoking user's.",
+      "item": [
+        {
+          "name": "List agents.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/agents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "agents"
+              ]
+            },
+            "description": "Phase 9 §66.1. List agents."
+          }
+        },
+        {
+          "name": "Create an agent.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/agents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "agents"
+              ]
+            },
+            "description": "Phase 9 §66.1. Create an agent."
+          }
+        },
+        {
+          "name": "Read an agent and its active version.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/agents/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "agents",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.1. Read an agent and its active version."
+          }
+        },
+        {
+          "name": "Update an agent, creating a new version.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/agents/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "agents",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.1. Update an agent, creating a new version."
+          }
+        },
+        {
+          "name": "Activate an agent version.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/agents/{id}/activate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "agents",
+                "{id}",
+                "activate"
+              ]
+            },
+            "description": "Phase 9 §66.1. Activate an agent version."
+          }
+        },
+        {
+          "name": "Pause an agent.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/agents/{id}/pause",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "agents",
+                "{id}",
+                "pause"
+              ]
+            },
+            "description": "Phase 9 §66.1. Pause an agent."
+          }
+        },
+        {
+          "name": "Run an agent against a test case without side effects.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/agents/{id}/test",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "agents",
+                "{id}",
+                "test"
+              ]
+            },
+            "description": "Phase 9 §66.1. Run an agent against a test case without side effects."
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Conversations",
+      "description": "§49 — the Business Assistant surface. Phase 9 §19 opened this group; §66.2 completes it.",
+      "item": [
+        {
+          "name": "List conversations.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/conversations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "conversations"
+              ]
+            },
+            "description": "Phase 9 §66.2. List conversations."
+          }
+        },
+        {
+          "name": "Send a message in a conversation.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/conversations/{id}/messages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "conversations",
+                "{id}",
+                "messages"
+              ]
+            },
+            "description": "Phase 9 §66.2. Send a message in a conversation."
+          }
+        },
+        {
+          "name": "Delete a conversation.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/conversations/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "conversations",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.2. Delete a conversation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Runs",
+      "description": "§12 — one agent task. §41 calls the record a trace.",
+      "item": [
+        {
+          "name": "Start an agent run.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/agents/{id}/runs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "agents",
+                "{id}",
+                "runs"
+              ]
+            },
+            "description": "Phase 9 §66.3. Start an agent run."
+          }
+        },
+        {
+          "name": "List runs.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/runs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "runs"
+              ]
+            },
+            "description": "Phase 9 §66.3. List runs."
+          }
+        },
+        {
+          "name": "Read a run trace.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/runs/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "runs",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.3. Read a run trace."
+          }
+        },
+        {
+          "name": "Cancel a running task.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/runs/{id}/cancel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "runs",
+                "{id}",
+                "cancel"
+              ]
+            },
+            "description": "Phase 9 §66.3. Cancel a running task."
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Actions",
+      "description": "§29–§30 — where everything the AI cannot do on its own authority arrives for a human decision.",
+      "item": [
+        {
+          "name": "Read a proposed action.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/actions/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "actions",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.4. Read a proposed action."
+          }
+        },
+        {
+          "name": "Edit a proposed action before approving it.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/actions/{id}/edit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "actions",
+                "{id}",
+                "edit"
+              ]
+            },
+            "description": "Phase 9 §66.4. Edit a proposed action before approving it."
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Knowledge",
+      "description": "§18–§23. Phase 8 built the tables and pgvector; nothing is indexed, because there is no embedding provider.",
+      "item": [
+        {
+          "name": "List knowledge documents.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/knowledge",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "knowledge"
+              ]
+            },
+            "description": "Phase 9 §66.5. List knowledge documents."
+          }
+        },
+        {
+          "name": "Read a document and its status.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/knowledge/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "knowledge",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.5. Read a document and its status."
+          }
+        },
+        {
+          "name": "Remove a document from the knowledge base.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/knowledge/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "knowledge",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.5. Remove a document from the knowledge base."
+          }
+        },
+        {
+          "name": "Retrieval over organization knowledge.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/knowledge/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "knowledge",
+                "search"
+              ]
+            },
+            "description": "Phase 9 §66.5. Retrieval over organization knowledge."
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Memory",
+      "description": "§24–§26 — memory must be controlled and transparent, which means the user can see and delete it.",
+      "item": [
+        {
+          "name": "List stored memories.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/memory",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "memory"
+              ]
+            },
+            "description": "Phase 9 §66.6. List stored memories."
+          }
+        },
+        {
+          "name": "Record a memory.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/memory",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "memory"
+              ]
+            },
+            "description": "Phase 9 §66.6. Record a memory."
+          }
+        },
+        {
+          "name": "Edit a memory.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/memory/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "memory",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.6. Edit a memory."
+          }
+        },
+        {
+          "name": "Delete a memory.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/memory/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "memory",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.6. Delete a memory."
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Prompts",
+      "description": "§27 and §57 — prompts as versioned product assets rather than string literals in application code.",
+      "item": [
+        {
+          "name": "List prompts.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/prompts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "prompts"
+              ]
+            },
+            "description": "Phase 9 §66.7. List prompts."
+          }
+        },
+        {
+          "name": "Create a prompt.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/prompts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "prompts"
+              ]
+            },
+            "description": "Phase 9 §66.7. Create a prompt."
+          }
+        },
+        {
+          "name": "Read a prompt and its versions.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/prompts/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "prompts",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.7. Read a prompt and its versions."
+          }
+        },
+        {
+          "name": "Create a prompt version.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/prompts/{id}/versions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "prompts",
+                "{id}",
+                "versions"
+              ]
+            },
+            "description": "Phase 9 §66.7. Create a prompt version."
+          }
+        },
+        {
+          "name": "Test a prompt version.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/prompts/{id}/test",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "prompts",
+                "{id}",
+                "test"
+              ]
+            },
+            "description": "Phase 9 §66.7. Test a prompt version."
+          }
+        },
+        {
+          "name": "Activate a prompt version.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/prompts/{id}/activate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "prompts",
+                "{id}",
+                "activate"
+              ]
+            },
+            "description": "Phase 9 §66.7. Activate a prompt version."
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Evaluations",
+      "description": "§43–§44 — every production agent is evaluated before activation, and the golden set is what it is evaluated against.",
+      "item": [
+        {
+          "name": "Run an evaluation.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/evaluations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "evaluations"
+              ]
+            },
+            "description": "Phase 9 §66.8. Run an evaluation."
+          }
+        },
+        {
+          "name": "List evaluations.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/evaluations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "evaluations"
+              ]
+            },
+            "description": "Phase 9 §66.8. List evaluations."
+          }
+        },
+        {
+          "name": "Read an evaluation result.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/evaluations/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "evaluations",
+                "{id}"
+              ]
+            },
+            "description": "Phase 9 §66.8. Read an evaluation result."
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Usage",
+      "description": "§39–§40 — AI usage becomes expensive without controls, so cost is a first-class read.",
+      "item": [
+        {
+          "name": "AI usage summary.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/usage",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "usage"
+              ]
+            },
+            "description": "Phase 9 §66.9. AI usage summary."
+          }
+        },
+        {
+          "name": "Usage by model.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/usage/models",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "usage",
+                "models"
+              ]
+            },
+            "description": "Phase 9 §66.9. Usage by model."
+          }
+        },
+        {
+          "name": "Usage by agent.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/usage/agents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "usage",
+                "agents"
+              ]
+            },
+            "description": "Phase 9 §66.9. Usage by agent."
+          }
+        },
+        {
+          "name": "Cost breakdown.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ai/usage/costs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ai",
+                "usage",
+                "costs"
+              ]
+            },
+            "description": "Phase 9 §66.9. Cost breakdown."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workflows",
+      "description": "§1 — the automation layer that connects triggers, conditions, actions, AI decisions and approvals. §26 puts the definition in versions, so a workflow row is identity, status and risk.",
+      "item": [
+        {
+          "name": "List workflows.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows"
+              ]
+            },
+            "description": "Phase 9 §63.1. List workflows."
+          }
+        },
+        {
+          "name": "Create a workflow.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows"
+              ]
+            },
+            "description": "Phase 9 §63.1. Create a workflow."
+          }
+        },
+        {
+          "name": "Read a workflow and its active version.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}"
+              ]
+            },
+            "description": "Phase 9 §63.1. Read a workflow and its active version."
+          }
+        },
+        {
+          "name": "Update workflow metadata.",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}"
+              ]
+            },
+            "description": "Phase 9 §63.1. Update workflow metadata."
+          }
+        },
+        {
+          "name": "Archive a workflow.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}"
+              ]
+            },
+            "description": "Phase 9 §63.1. Archive a workflow."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workflow Versions",
+      "description": "§27 — eleven fields per version, six of them inside the §64 definition document. §3.4 makes a published one immutable.",
+      "item": [
+        {
+          "name": "List versions of a workflow.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}/versions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}",
+                "versions"
+              ]
+            },
+            "description": "Phase 9 §63.2. List versions of a workflow."
+          }
+        },
+        {
+          "name": "Create a draft version.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}/versions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}",
+                "versions"
+              ]
+            },
+            "description": "Phase 9 §63.2. Create a draft version."
+          }
+        },
+        {
+          "name": "Read a version.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}/versions/{version_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}",
+                "versions",
+                "{version_id}"
+              ]
+            },
+            "description": "Phase 9 §63.2. Read a version."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workflow Validation",
+      "description": "§29 — twelve rules. Six are decidable from the definition alone; six need a runtime, a connector or a live endpoint, and one of those cannot be decided at publish time at all.",
+      "item": [
+        {
+          "name": "Validate the draft version.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}/validate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}",
+                "validate"
+              ]
+            },
+            "description": "Phase 9 §63.3. Validate the draft version."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workflow Simulation",
+      "description": "§30 — evaluate a workflow against a sample event without changing production data.",
+      "item": [
+        {
+          "name": "Simulate a workflow against a sample event.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}/simulate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}",
+                "simulate"
+              ]
+            },
+            "description": "Phase 9 §63.4. Simulate a workflow against a sample event."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workflow Lifecycle",
+      "description": "§26 and §80 — publishing freezes a version; pausing stops the next execution rather than recording an intention to.",
+      "item": [
+        {
+          "name": "Publish the validated draft.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}/publish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}",
+                "publish"
+              ]
+            },
+            "description": "Phase 9 §63.5. Publish the validated draft."
+          }
+        },
+        {
+          "name": "Pause a workflow.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}/pause",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}",
+                "pause"
+              ]
+            },
+            "description": "Phase 9 §63.6. Pause a workflow."
+          }
+        },
+        {
+          "name": "Resume a paused workflow.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}/resume",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}",
+                "resume"
+              ]
+            },
+            "description": "Phase 9 §63.6. Resume a paused workflow."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workflow Execution",
+      "description": "§6 — the manual and API trigger types. The other five start a workflow without a request.",
+      "item": [
+        {
+          "name": "Start an execution.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/{workflow_id}/execute",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "{workflow_id}",
+                "execute"
+              ]
+            },
+            "description": "Phase 9 §63.7. Start an execution."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workflow Executions",
+      "description": "§33 and §43 — one independent run, and the history that makes it explicable. §13.1 keeps the state in a row rather than a process, which is why §80's delayed workflows survive a restart.",
+      "item": [
+        {
+          "name": "List executions.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflow-executions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflow-executions"
+              ]
+            },
+            "description": "Phase 9 §63.8. List executions."
+          }
+        },
+        {
+          "name": "Read an execution and its node trace.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflow-executions/{execution_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflow-executions",
+                "{execution_id}"
+              ]
+            },
+            "description": "Phase 9 §63.8. Read an execution and its node trace."
+          }
+        },
+        {
+          "name": "Cancel a running execution.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflow-executions/{execution_id}/cancel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflow-executions",
+                "{execution_id}",
+                "cancel"
+              ]
+            },
+            "description": "Phase 9 §63.8. Cancel a running execution."
+          }
+        },
+        {
+          "name": "Replay an execution.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflow-executions/{execution_id}/replay",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflow-executions",
+                "{execution_id}",
+                "replay"
+              ]
+            },
+            "description": "Phase 9 §63.8. Replay an execution."
+          }
+        },
+        {
+          "name": "Retry a failed node.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflow-executions/{execution_id}/nodes/{node_id}/retry",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflow-executions",
+                "{execution_id}",
+                "nodes",
+                "{node_id}",
+                "retry"
+              ]
+            },
+            "description": "Phase 9 §63.9. Retry a failed node."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workflow Approvals",
+      "description": "§15 — execution stops here until a human decides. The third approval surface in the platform, after Phase 10 §67 and Phase 11 §29; ADR-0026 records why the tables are separate and the four-eyes rule is not.",
+      "item": [
+        {
+          "name": "List pending workflow approvals.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflow-approvals",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflow-approvals"
+              ]
+            },
+            "description": "Phase 9 §63.10. List pending workflow approvals."
+          }
+        },
+        {
+          "name": "Read an approval and its decisions.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflow-approvals/{approval_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflow-approvals",
+                "{approval_id}"
+              ]
+            },
+            "description": "Phase 9 §63.10. Read an approval and its decisions."
+          }
+        },
+        {
+          "name": "Approve a paused execution.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflow-approvals/{approval_id}/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflow-approvals",
+                "{approval_id}",
+                "approve"
+              ]
+            },
+            "description": "Phase 9 §63.10. Approve a paused execution."
+          }
+        },
+        {
+          "name": "Reject a paused execution.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Organization-ID",
+                "value": "{{organizationId}}"
+              },
+              {
+                "key": "X-Environment",
+                "value": "{{environment}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflow-approvals/{approval_id}/reject",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflow-approvals",
+                "{approval_id}",
+                "reject"
+              ]
+            },
+            "description": "Phase 9 §63.10. Reject a paused execution."
+          }
+        }
+      ]
+    }
+  ]
+}
